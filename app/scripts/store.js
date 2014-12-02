@@ -1,0 +1,1 @@
+Fireblog.ApplicationAdapter = DS.FixtureAdapter;
