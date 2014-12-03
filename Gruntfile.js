@@ -105,6 +105,18 @@ module.exports = function (grunt) {
                     ]
                 }]
             },
+            hero: {
+                files: [{
+                    dot: true,
+                    src: [
+                        '<%= yeoman.hero %>/*',
+                        '!<%= yeoman.hero %>/.git*',
+                        '!<%= yeoman.hero %>/package.json',
+                        '!<%= yeoman.hero %>/Procfile',
+                        '!<%= yeoman.hero %>/server.js'
+                    ]
+                }]
+            },
             server: '.tmp'
         },
         jshint: {
@@ -298,8 +310,7 @@ module.exports = function (grunt) {
                         dot: true,
                         cwd: '<%= yeoman.dist %>',
                         dest: '<%= yeoman.hero %>',
-                        src: '**/*'
-                        
+                        src: ['**/*','!.git','!.git/**/*']
                     }
                 ]
             }
@@ -394,6 +405,7 @@ module.exports = function (grunt) {
 
      grunt.registerTask('heroku', [
         'clean:dist',
+        'clean:hero',
         'replace:dist',
         'useminPrepare',
         'concurrent:dist',
@@ -401,10 +413,11 @@ module.exports = function (grunt) {
         'concat',
         'cssmin',
         'uglify',
-        'copy',
-        'copy:hero',
+        'copy:fonts',
+        'copy:dist',
         'rev',
-        'usemin'
+        'usemin',
+        'copy:hero'
     ]);
 
     grunt.registerTask('default', [
