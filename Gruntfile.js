@@ -21,7 +21,8 @@ module.exports = function (grunt) {
     // configurable paths
     var yeomanConfig = {
         app: 'app',
-        dist: 'dist'
+        dist: 'dist',
+        hero: 'heroku'
     };
 
     grunt.initConfig({
@@ -275,19 +276,32 @@ module.exports = function (grunt) {
                 ]
             }, 
             dist: {
-                files: [{
-                    expand: true,
-                    dest: '<%= yeoman.dist %>',
-                    cwd: 'heroku',
-                    src: '*',
-                    rename: function (dest, src) {
-                        var path = require('path');
-                        if (src === 'distpackage.json') {
-                            return path.join(dest, 'package.json');
-                        }
-                        return path.join(dest, src);
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.app %>',
+                        dest: '<%= yeoman.dist %>',
+                        src: [
+                            '*.{ico,txt}',
+                            '.htaccess',
+                            'images/{,*/}*.{webp,gif}',
+                            'styles/fonts/*'
+                        ]
                     }
-                }]
+                ]
+            }, 
+            hero: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.dist %>',
+                        dest: '<%= yeoman.hero %>',
+                        src: '**/*'
+                        
+                    }
+                ]
             }
         },
         concurrent: {
@@ -374,6 +388,21 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy',
+        'rev',
+        'usemin'
+    ]);
+
+     grunt.registerTask('heroku', [
+        'clean:dist',
+        'replace:dist',
+        'useminPrepare',
+        'concurrent:dist',
+        'neuter:app',
+        'concat',
+        'cssmin',
+        'uglify',
+        'copy',
+        'copy:hero',
         'rev',
         'usemin'
     ]);
