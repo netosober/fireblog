@@ -4,6 +4,6 @@
  	</div>
 	<div class="col-md-12">
   	<h4><em>Published on {{format-date model.publishedDate 'LL'}}</em></h4>
-  	<p>{{model.body}}</p>
+  	{{markdown model.body}}
 	</div>
 </div>

@@ -6,7 +6,7 @@
    	</div>
 		<div class="col-md-12">
     	<h4><em>Published on {{format-date blogpost.publishedDate 'LL'}}</em></h4>
-    	<p>{{blogpost.body}}</p>
+    	<p>{{markdown blogpost.body}}</p>
   	</div>
 	</div>
 {{/each}}
